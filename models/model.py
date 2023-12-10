@@ -1,61 +1,3 @@
-# from sqlalchemy import (
-#     Integer,
-#     String,
-#     ForeignKey,
-#     Table,
-#     Column
-# )
-#
-# from sqlalchemy.orm import (
-#     DeclarativeBase,
-#     mapped_column,
-#     relationship,
-# )
-# from config import engine
-#
-# class Base(DeclarativeBase):
-#     pass
-#
-#
-# class User(Base):
-#     __tablename__ = 'user'
-#     id = mapped_column(Integer, primary_key=True, autoincrement=True)
-#     username = mapped_column(String, nullable=False)
-#     email = mapped_column(String, nullable=False)
-#
-#     def __repr__(self) -> str:
-#         return f'{self.username} {self.email}'
-#
-#
-# post_tag_table = Table(
-#     'post_tag_table',
-#     Base.metadata,
-#     Column('post_id', ForeignKey('post.id')),
-#     Column('tag_id', ForeignKey('tag.id'))
-# )
-#
-#
-# class Post(Base):
-#     __tablename__ = 'post'
-#     id = mapped_column(Integer, primary_key=True, autoincrement=True)
-#     title = mapped_column(String, nullable=False)
-#     content = mapped_column(String, nullable=False)
-#     user = mapped_column(Integer, ForeignKey('user.id', onupdate='CASCADE', ondelete='CASCADE'), nullable=False)
-#     tags = relationship("Tag", secondary=post_tag_table, backref='posts')
-#
-#     def __repr__(self) -> str:
-#         return f'Title: {self.title}, content: {self.content}'
-#
-#
-# class Tag(Base):
-#     __tablename__ = 'tag'
-#     id = mapped_column(Integer, primary_key=True, autoincrement=True)
-#     title = mapped_column(String, nullable=False)
-#     name = mapped_column(String, nullable=False)
-#
-#     def __repr__(self) -> str:
-#         return f'{self.title}'
-
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import Session
 from config import engine
@@ -201,11 +143,8 @@ def first_db_init() -> None:
         create_post_with_tags(session, post10, tag4)
 
 
-def main():
+if __name__ == "__main__":
     # db.metadata.create_all(bind=engine)
-    # Base.metadata.drop_all(bind=engine)
+    # db.metadata.drop_all(bind=engine)
     # first_db_init()
     pass
-
-if __name__ == "__main__":
-    main()
