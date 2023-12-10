@@ -1,0 +1,9 @@
+1. installing Flask
+    pip install flask
+
+2. freeze all dependencies to requirements.txt file
+    pip freeze > requirements.txt
+
+3. sqlalchemy database url format
+
+    dialect+driver://username:password@host:port/database_name
