@@ -16,5 +16,15 @@
 8. init application (db.init_app(app)) 
 
 9. create migrate variable to linked app and db (migrate = Migrate(app, db))
-   after it flask command part will appear db command with which we can control migrations
+   after it in flask command part will appear db command with which we can control migrations
 
+10. in new project we need execute (once) flask db init command
+
+11. flask migrate - create migrations
+
+12. flask upgrade - apply migration
+
+13. migration need to push to git, when we pull project from git 
+    we need only make flask db upgrade to have last db version
+
+14. 

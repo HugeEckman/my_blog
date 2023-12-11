@@ -138,5 +138,5 @@ def fill_db():
         create_post_with_tags(session, post10, tag4)
 
 
-# if __name__ == '__main__':
-#     app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True)
