@@ -1,9 +1,20 @@
-1. installing Flask
-    pip install flask
+1. add password_hash field in to User model class for 
+   further authorization and autentication
 
-2. freeze all dependencies to requirements.txt file
-    pip freeze > requirements.txt
+2. main.py rename to app.py for have opportunity run flask commands
 
-3. sqlalchemy database url format
+3. create three cli command for creating, dropping and filling database
 
-    dialect+driver://username:password@host:port/database_name
+4. in config.py defined two separate connection strings for two different db engine_postgres
+
+5. define three template with jinja template engine
+
+6. in to test folder add __init__.py file, for transforming folder to module and having opportunity import config.py file in to conftest.py file
+
+7. in app.py file define db uri from config.py file (app.config['SQLALCHEMY_DATABASE_URI'] = config.SQLITE_URL)
+
+8. init application (db.init_app(app)) 
+
+9. create migrate variable to linked app and db (migrate = Migrate(app, db))
+   after it flask command part will appear db command with which we can control migrations
+
