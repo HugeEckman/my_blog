@@ -1,15 +1,14 @@
-1. add password_hash field in to User model class for 
-   further authorization and autentication
+1. add password_hash field in to User model class for further authorization and autentication
 
 2. main.py rename to app.py for have opportunity run flask commands
 
 3. create three cli command for creating, dropping and filling database
 
-4. in config.py defined two separate connection strings for two different db engine_postgres
+4. in config.py defined two separate connection strings for two different db (engine - for SQLite db, engine_postgres - for PostgreSQL)
 
 5. define three template with jinja template engine
 
-6. in to test folder add __init__.py file, for transforming folder to module and having opportunity import config.py file in to conftest.py file
+6. in to test folder add __init__.py file for transforming folder to module and having opportunity import config.py file in to conftest.py file
 
 7. in app.py file define db uri from config.py file (app.config['SQLALCHEMY_DATABASE_URI'] = config.SQLITE_URL)
 
@@ -24,7 +23,11 @@
 
 12. flask upgrade - apply migration
 
-13. migration need to push to git, when we pull project from git 
-    we need only make flask db upgrade to have last db version
+13. migration need to push to git, when we pull project from git we need only make flask db upgrade to have last db version
 
-14. 
+14. in root directory add forms.py file
+
+15. in forms.py file add LoginForm class
+
+16. in template directory add login template, linked with LoginForm class
+
