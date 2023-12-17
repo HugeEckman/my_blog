@@ -1,10 +1,11 @@
 
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash, redirect
 from sqlalchemy.orm import Session
 from sqlalchemy import select
 from models import User, Post, Tag, db 
 from flask_migrate import Migrate
+from forms import LoginForm
 
 import config
 
@@ -13,7 +14,6 @@ app.config['SQLALCHEMY_DATABASE_URI'] = config.SQLITE_URL
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or 'blahblahqwerty1234'
 db.init_app(app)
 migrate = Migrate(app, db)
-
 
 @app.route("/")
 def index():
@@ -29,6 +29,18 @@ def post(post_id):
         single_post = session.query(Post).get(post_id)
 
     return render_template('post.html', post=single_post) 
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    # print(f'Request: {request}')
+    if form.validate_on_submit():
+        flash('Login requested for user {}, remember_me={}'.format(
+            form.username.data, form.remember_me.data))
+        return redirect('/index')
+    return render_template('login.html', title='Sign In', form=form)
+
 
 @app.cli.command('create_db')
 def init_db():

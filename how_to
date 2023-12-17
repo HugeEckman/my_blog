@@ -31,3 +31,4 @@
 
 16. in template directory add login template, linked with LoginForm class
 
+17. add login view (function 'login') in app.py file
