@@ -1,3 +1,5 @@
+
+import os
 from flask import Flask, render_template, request
 from sqlalchemy.orm import Session
 from sqlalchemy import select
@@ -8,6 +10,7 @@ import config
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = config.SQLITE_URL
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or 'blahblahqwerty1234'
 db.init_app(app)
 migrate = Migrate(app, db)
 
