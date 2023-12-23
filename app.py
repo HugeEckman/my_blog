@@ -5,9 +5,9 @@ from sqlalchemy import select
 from models import User, Post, Tag, db 
 from flask_migrate import Migrate
 from forms import LoginForm
-from flask_login import LoginManager
-
+from flask_login import LoginManager, current_user, login_user, logout_user
 import config
+
 
 app = Flask(__name__)
 login = LoginManager(app)
@@ -15,6 +15,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = config.SQLITE_URL
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or 'blahblahqwerty1234'
 db.init_app(app)
 migrate = Migrate(app, db)
+
 
 @app.route("/")
 def index():
@@ -34,13 +35,23 @@ def post(post_id):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
     form = LoginForm()
-    # print(f'Request: {request}')
     if form.validate_on_submit():
-        flash('Login requested for user {}, remember_me={}'.format(
-            form.username.data, form.remember_me.data))
+        user = User.query.filter_by(username=form.username.data).first()
+        if user is None or not user.check_password(form.password.data):
+            flash('Invalid username or password')
+            return redirect(url_for('login'))
+        login_user(user, remember=form.remember_me.data)
         return redirect(url_for('index'))
     return render_template('login.html', title='Sign In', form=form)
+
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
 
 
 @app.cli.command('create_db')
