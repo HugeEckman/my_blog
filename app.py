@@ -2,7 +2,7 @@ import os
 from flask import Flask, render_template, url_for, flash, redirect
 from sqlalchemy.orm import Session
 from sqlalchemy import select
-from models import User, Post, Tag, db 
+from model import User, Post, Tag, db 
 from flask_migrate import Migrate
 from forms import LoginForm
 from flask_login import LoginManager, current_user, login_user, logout_user
@@ -16,6 +16,9 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or 'blahblahqwerty1234'
 db.init_app(app)
 migrate = Migrate(app, db)
 
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))
 
 @app.route("/")
 def index():

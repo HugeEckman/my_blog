@@ -1,5 +1,5 @@
 from sqlalchemy import select
-from models.model import User, Post
+from model import User, Post
 
 
 def test_post_amount(db_session):

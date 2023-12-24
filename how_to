@@ -19,9 +19,9 @@
 
 10. in new project we need execute (once) flask db init command
 
-11. flask migrate - create migrations
+11. flask db migrate - create migrations
 
-12. flask upgrade - apply migration
+12. flask db upgrade - apply migration
 
 13. migration need to push to git, when we pull project from git we need only make flask db upgrade to have last db version
 
@@ -34,3 +34,5 @@
 17. add login view (function 'login') in app.py file
 
 18. replace direct urls by url_for functions
+
+19. in app.py added user loader for working with flask-login
