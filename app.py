@@ -1,16 +1,18 @@
 import os
-from flask import Flask, render_template, url_for, flash, redirect
+from flask import Flask, render_template, url_for, flash, redirect, request
 from sqlalchemy.orm import Session
 from sqlalchemy import select
 from model import User, Post, Tag, db 
 from flask_migrate import Migrate
 from forms import LoginForm
-from flask_login import LoginManager, current_user, login_user, logout_user
+from flask_login import LoginManager, current_user, login_user, logout_user, login_required
+# from werkzeug.urls import url_parse
 import config
 
 
 app = Flask(__name__)
 login = LoginManager(app)
+login.login_view = 'login'
 app.config['SQLALCHEMY_DATABASE_URI'] = config.SQLITE_URL
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') or 'blahblahqwerty1234'
 db.init_app(app)
@@ -21,6 +23,7 @@ def load_user(id):
     return User.query.get(int(id))
 
 @app.route("/")
+# @login_required
 def index():
     with Session(config.engine) as session:
         all_posts = session.scalars(select(Post)).all()
@@ -28,7 +31,9 @@ def index():
     return render_template('index.html', posts=all_posts)
 
 @app.route('/post/<int:post_id>')
+@login_required
 def post(post_id):
+    print(f'>>> REQUEST: {request}')
     print(f'Post_id = {post_id}')
     with Session(config.engine) as session:
         single_post = session.query(Post).get(post_id)
@@ -49,6 +54,10 @@ def login():
         login_user(user, remember=form.remember_me.data)
         return redirect(url_for('index'))
     return render_template('login.html', title='Sign In', form=form)
+        # next_page = request.args.get('next')
+        # if not next_page or url_parse(next_page).netloc != '':
+        #     next_page = url_for('index')
+        # return redirect(next_page)
 
 
 @app.route('/logout')
@@ -93,10 +102,15 @@ def fill_db():
         # creating and commiting users
 
         user1 = create_user(session, 'AmazingSam', 'sam@infobox.co')
+        user1.set_password('qwer123')
         user2 = create_user(session, 'ValueableJohn', 'john@infobox.co')
+        user2.set_password('qwer124')
         user3 = create_user(session, 'CuriousDave', 'dave@infobox.co')
+        user3.set_password('qwer125')
         user4 = create_user(session, 'JellySally', 'sally@infobox.co')
+        user4.set_password('qwer126')
         user5 = create_user(session, 'IncredibleLarry', 'larry@infobox.co')
+        user5.set_password('qwer127')
 
         # creating tags
 

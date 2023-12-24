@@ -36,3 +36,5 @@
 18. replace direct urls by url_for functions
 
 19. in app.py added user loader for working with flask-login
+
+20. added login and logout routes

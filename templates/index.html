@@ -12,6 +12,16 @@
             <p class="blog-post-meta">January 1, 2014 by <a href="#">{{ post.user }}</a></p>
             <p>{{ post.content }}</p>
             <p>
+                <!-- {% if current_user.is_anonymous %}
+                <a href="{{url_for('login')}}">
+                    Continue reading
+                </a>
+                {% else %}
+                <a href="{{url_for('post', post_id = post.id)}}">
+                    Continue reading
+                </a>
+                {% endif %} -->
+
                 <a href="{{url_for('post', post_id = post.id)}}">
                     Continue reading
                 </a>
