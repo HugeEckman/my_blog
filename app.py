@@ -83,12 +83,14 @@ def register():
 
 @app.cli.command('create_db')
 def init_db():
-    db.metadata.create_all(config.engine)
+    # db.metadata.create_all(config.engine)
+    db.metadata.create_all(config.engine_postgres)
 
 
 @app.cli.command('drop_db')
 def init_db():
-    db.metadata.drop_all(config.engine)
+    # db.metadata.drop_all(config.engine)
+    db.metadata.drop_all(config.engine_postgres)
 
 
 def create_user(session: Session, username: str, email: str) -> User:
@@ -113,7 +115,8 @@ def create_post_with_tags(session: Session, post: Post, *tags) -> None:
 
 @app.cli.command('fill_db')
 def fill_db():
-    with Session(config.engine) as session:
+    # with Session(config.engine) as session:
+    with Session(config.engine_postgres) as session:
         # creating and commiting users
 
         user1 = create_user(session, 'AmazingSam', 'sam@infobox.co')
